@@ -126,7 +126,7 @@ public class DefaultService {
         // 폴더 생성
         File filePath = new File(path);
         if(!filePath.exists()) {
-            filePath.mkdir();
+            filePath.mkdirs();
         }
         // 문자로 파일명 생성
         String filename = path + randomStr + ".txt";
