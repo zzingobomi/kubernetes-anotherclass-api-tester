@@ -1,3 +1,4 @@
+# 공통 및 Default 값 지정
 spring:
   profiles:
     active: local
