@@ -6,5 +6,5 @@ datasource:
   password: "local"
 
 volume-path:
-  persistent-volume-data: "C:\\data\\local\\"
-  pod-volume-data: "C:\\data\\temp\\"
+  persistent-volume-data: "C:\\data\\local\\pv"
+  pod-volume-data: "C:\\data\\local\\pod"
