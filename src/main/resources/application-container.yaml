@@ -6,5 +6,5 @@ datasource:
   password: "local"
 
 volume-path:
-  persistent-volume-data: "/usr/src/myapp/files/dev"
+  persistent-volume-data: "/usr/src/myapp/files/dev/"
   pod-volume-data: "/usr/src/myapp/tmp/"
