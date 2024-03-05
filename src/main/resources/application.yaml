@@ -5,15 +5,16 @@ spring:
 server:
   port: 8080
 
+# Configmap에 의해 Path 변경 가능
 application:
   role: "ALL"
   version: "Api Tester v1.0.0"
-
+postgresql:
+  filepath: "/usr/src/myapp/datasource/postgresql-info.yaml"
+  
+# Secret으로 주입
 datasource:
   driver-class-name:
   url:
   username:
   password:
-
-postgresql:
-  filepath:
