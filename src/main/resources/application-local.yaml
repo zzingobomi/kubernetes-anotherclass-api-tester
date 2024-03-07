@@ -5,6 +5,12 @@ datasource:
   username: "local"
   password: "local"
 
+# for windows
 volume-path:
   persistent-volume-data: "C:\\volume\\local\\pv"
   pod-volume-data: "C:\\volume\\local\\pod"
+
+# for mac
+#volume-path:
+#  persistent-volume-data: "/volume/local/pv"
+#  pod-volume-data: "/volume/local/pod"
