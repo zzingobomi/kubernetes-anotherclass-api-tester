@@ -1,16 +1,15 @@
-# PostgreSQL DB 설정 (Secret 대체)
 datasource:
   driver-class-name: "org.postgresql.Driver"
   url: "jdbc:postgresql://postgresql:5430"
   username: "local"
   password: "local"
 
-# for windows
+
 volume-path:
+  # for windows
   persistent-volume-data: "C:\\volume\\local\\pv"
   pod-volume-data: "C:\\volume\\local\\pod"
 
-# for mac
-#volume-path:
-#  persistent-volume-data: "/volume/local/pv"
-#  pod-volume-data: "/volume/local/pod"
+  # for mac
+#  persistent-volume-data: "/users/<username>/IdeaProjects/volume/local/pv/"
+#  pod-volume-data: "/users/<username>/IdeaProjects/volume/local/pod/"

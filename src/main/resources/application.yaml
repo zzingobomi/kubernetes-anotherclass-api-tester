@@ -1,21 +1,29 @@
-# 공통 및 Default 값 지정
+# 환경별 application.yaml 파일
 spring:
   profiles:
     active: local
 
+# App Port
 server:
   port: 8080
 
-# Configmap에 의해 Path 변경 가능
+# App 정보
 application:
   role: "ALL"
   version: "Api Tester v1.0.0"
+
+# Database 접속 정보 위치 (Secret으로 주입)
 postgresql:
   filepath: "/usr/src/myapp/datasource/postgresql-info.yaml"
-  
-# Secret으로 주입
+
+# Database 접속 정보
 datasource:
   driver-class-name:
   url:
   username:
   password:
+
+# Volume 위치
+volume-path:
+  persistent-volume-data: 
+  pod-volume-data:
