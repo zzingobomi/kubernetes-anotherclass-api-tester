@@ -7,8 +7,8 @@ datasource:
 
 volume-path:
   # for windows
-  persistent-volume-data: "C:\\volume\\local\\pv"
-  pod-volume-data: "C:\\volume\\local\\pod"
+  persistent-volume-data: "C:\\volume\\local\\pv\\"
+  pod-volume-data: "C:\\volume\\local\\pod\\"
 
   # for mac
 #  persistent-volume-data: "/users/<username>/IdeaProjects/volume/local/pv/"
