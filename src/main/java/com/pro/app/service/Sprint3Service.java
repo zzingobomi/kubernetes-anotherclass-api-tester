@@ -1,16 +1,11 @@
 package com.pro.app.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.pro.app.component.FileUtils;
 import com.pro.app.domain.DatasourceProperties;
-import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.Yaml;
 
 
 import java.io.*;
@@ -19,7 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -59,7 +53,7 @@ public class Sprint3Service {
 
         FileUtils fileUtils = new FileUtils();
         String NAMESPACE = fileUtils.readFile(tokenPath + "namespace");
-        String API_URL = "https://kubernetes/api/v1/namespace/"+NAMESPACE+"/pods/"+podName;
+        String API_URL = "https://kubernetes.default/api/v1/namespace/"+NAMESPACE+"/pods/"+podName;
         String TOKEN = "Bearer " + fileUtils.readFile(tokenPath + "token");
         String responseString = "";
         log.info("NAMESPACE: " +NAMESPACE);
