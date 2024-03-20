@@ -8,11 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
 import java.io.*;
+import javax.net.ssl.HttpsURLConnection;;
 import java.net.HttpURLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.KeyStore;
+import java.security.cert.CertificateFactory;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -63,17 +68,32 @@ public class Sprint3Service {
 
         try {
 
+            // 인증서 로드
+            CertificateFactory cf = CertificateFactory.getInstance("X.509");
+            FileInputStream fis = new FileInputStream(tokenPath + "ca.crt");
+            java.security.cert.Certificate caCert = cf.generateCertificate(fis);
+
+            // 신뢰할 수 있는 CA 인증서 추가
+            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+            keyStore.load(null, null);
+            keyStore.setCertificateEntry("caCert", caCert);
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            tmf.init(keyStore);
+
+            // SSL 컨텍스트 구성
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, tmf.getTrustManagers(), null);
+
             // URL 객체 생성
             URL url = new URL(API_URL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 
             // 요청 메소드 설정
             conn.setRequestMethod("GET");
             // 토큰을 사용하여 인증 헤더 추가
             conn.setRequestProperty("Authorization", "Bearer " + TOKEN);
-
-            // 설정된 CA 인증서 파일을 사용하여 SSL 연결 설정
-            System.setProperty("javax.net.ssl.trustStore", tokenPath+"ca.crt");
+            // SSL 컨텍스트 설정
+            conn.setSSLSocketFactory(sslContext.getSocketFactory());
 
             // 응답 코드 가져오기
             int responseCode = conn.getResponseCode();
