@@ -30,6 +30,8 @@ public class Sprint3Controller {
     @Value(value = "${downward-api.env.nodename}")
     private String downwardApiEnvNodeName;
 
+    @Value(value = "${api-token.filepath}")
+    private String apiTokenFilepath;
 
     public Sprint3Controller() {
     }
@@ -48,6 +50,14 @@ public class Sprint3Controller {
         String returnString = "<b>[Pod Name] :</b> " + downwardApiEnvPodName ;
         returnString += "<br><b>[Pod IP] :</b> " + downwardApiEnvPodIP;
         returnString += "<br><b>[Node Name] :</b> " + downwardApiEnvNodeName ;
+        return ResponseEntity.ok(returnString);
+    }
+
+    @GetMapping("/pod-kube-api-server")
+    @ResponseBody
+    public ResponseEntity<Object> podKubeApiServer()  {
+
+        String returnString = sprint3Service.getSelfPodKubeApiServer(downwardApiEnvPodName, apiTokenFilepath);
         return ResponseEntity.ok(returnString);
     }
 

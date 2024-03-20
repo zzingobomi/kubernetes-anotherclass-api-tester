@@ -2,6 +2,7 @@ package com.pro.app.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.pro.app.component.FileUtils;
 import com.pro.app.domain.DatasourceProperties;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -11,10 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+
+import java.io.*;
+import java.net.HttpURLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,6 +22,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import java.net.URL;
+
 
 @Service
 public class Sprint3Service {
@@ -51,4 +54,53 @@ public class Sprint3Service {
 
         return allContents;
     }
+
+    public String getSelfPodKubeApiServer(String podName, String tokenPath) {
+
+        FileUtils fileUtils = new FileUtils();
+        String NAMESPACE = fileUtils.readFile(tokenPath + "namespace");
+        String API_URL = "https://kubernetets/api/v1/pods/"+podName+"?namespace="+NAMESPACE;
+        String TOKEN = "Bearer " + fileUtils.readFile(tokenPath + "token");
+        String responseString = "";
+        log.info("NAMESPACE: " +NAMESPACE);
+        log.info("API_URL: " +API_URL);
+        log.info("TOKEN: " +TOKEN);
+
+        try {
+
+            // URL 객체 생성
+            URL url = new URL(API_URL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            // 요청 메소드 설정
+            conn.setRequestMethod("GET");
+            // 토큰을 사용하여 인증 헤더 추가
+            conn.setRequestProperty("Authorization", TOKEN);
+            // 응답 코드 가져오기
+            int responseCode = conn.getResponseCode();
+            log.info("Response Code : " + responseCode);
+
+            // 버퍼 리더를 사용하여 응답 내용 읽기
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            // 응답 출력
+            responseString = response.toString();
+            log.info(responseString);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return responseString;
+    }
+
+
+
 }
