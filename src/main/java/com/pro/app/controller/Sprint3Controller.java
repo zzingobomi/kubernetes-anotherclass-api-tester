@@ -57,8 +57,28 @@ public class Sprint3Controller {
     @ResponseBody
     public ResponseEntity<Object> podKubeApiServer()  {
 
-        String returnString = sprint3Service.getSelfPodKubeApiServer(downwardApiEnvPodName, apiTokenFilepath);
-        return ResponseEntity.ok(returnString);
+        String returnYaml = sprint3Service.getSelfPodKubeApiServer(downwardApiEnvPodName, apiTokenFilepath);
+        String escapeHtml = returnYaml.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#x27;");
+
+        // YAML 문자열을 HTML 내에 포함
+        String htmlContent = "<!DOCTYPE html>" +
+                "<html>" +
+                "<head>" +
+                "<title>Pod Information</title>" +
+                "<style>pre { background-color: #f0f0f0; padding: 10px; }</style>" +
+                "</head>" +
+                "<body>" +
+                "<h1>Pod Information in YAML Format</h1>" +
+                "<pre>" + escapeHtml + "</pre>" +
+                "</body>" +
+                "</html>";
+
+        return ResponseEntity.ok().header("Content-Type", "text/html;charset=UTF-8")
+                .body(htmlContent);
     }
 
 }

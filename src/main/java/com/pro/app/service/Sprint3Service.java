@@ -93,11 +93,7 @@ public class Sprint3Service {
             e.printStackTrace();
         }
 
-        return responseString.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\"", "&quot;")
-                .replace("'", "&#x27;");
+        return responseString;
     }
 
 
