@@ -1,6 +1,7 @@
 package com.pro.app.component;
 
 import com.pro.app.service.DefaultService;
+import com.pro.app.service.InitService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,11 @@ public class ScheduleTasks {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
     @Autowired
-    private DefaultService defaultService;
+    private InitService initService;
 
     @Scheduled(fixedRate = 5000)
     public void reportCurrentTime() {
         //log.info("The time is now {}", dateFormat.format(new Date()));
-        defaultService.datasourceSecretLoad();
+        initService.datasourceSecretLoad();
     }
 }
