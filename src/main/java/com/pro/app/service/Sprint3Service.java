@@ -4,7 +4,9 @@ package com.pro.app.service;
 import com.pro.app.domain.DatasourceProperties;
 import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.models.V1Pod;
+import io.kubernetes.client.util.Config;
 import io.kubernetes.client.util.Yaml;
+import io.kubernetes.client.util.credentials.AccessTokenAuthentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +64,7 @@ public class Sprint3Service {
 
         try {
         // ApiClient 구성
-        ApiClient client = ClientBuilder.kubeconfig(null).build();
+        ApiClient client = Config.defaultClient();
 
         // 토큰과 CA 인증서로 인증 구성
         String token = new String(java.nio.file.Files.readAllBytes(Paths.get(tokenPath)));
