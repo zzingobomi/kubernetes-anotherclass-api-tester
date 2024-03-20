@@ -10,7 +10,7 @@ server:
 # App 정보
 application:
   role: "ALL"
-  version: "Api Tester v1.0.0"
+  version: "Api Tester v3.0.0"
 
 # Database 접속 정보 위치 (Secret으로 주입)
 postgresql:
@@ -18,7 +18,7 @@ postgresql:
 
 # Pod 정보 파일 (Pod의 Volume과 env로 주입)
 downward-api:
-  volume: 
+  volume:
     filepath:
   env:
     podname:
