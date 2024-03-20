@@ -59,7 +59,7 @@ public class Sprint3Service {
         // 토큰과 CA 인증서 경로 설정
         String tokenPath = path + "token";
         String caPath = path + "ca.crt";
-        String namespace = path + "namespace";
+        String namespacePath = path + "namespace";
         String responseString = "";
 
         try {
@@ -68,6 +68,7 @@ public class Sprint3Service {
 
             // 파일에서 Token 읽기
             String token = new String(Files.readAllBytes(Paths.get(tokenPath)));
+            String namespace = new String(Files.readAllBytes(Paths.get(namespacePath)));
 
             // ApiClient 생성 및 설정
             ApiClient client = Config.defaultClient();
