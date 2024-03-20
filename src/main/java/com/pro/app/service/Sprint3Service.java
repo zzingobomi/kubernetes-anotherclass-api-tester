@@ -38,12 +38,12 @@ public class Sprint3Service {
         try (Stream<Path> paths = Files.walk(Paths.get(path))) {
             List<Path> fileList = paths.filter(Files::isRegularFile).collect(Collectors.toList());
             for (Path file : fileList) {
-                allContents += "File: " + file;
+                allContents += "<b>File: " + file  +"</b><br>";
                 List<String> fileContent = Files.readAllLines(file);
                 for (String line : fileContent) {
-                    allContents += "\n" + line;
+                    allContents += line + "<br>" ;
                 }
-                allContents += "----------";
+                allContents += "---<br>";
             }
         } catch (IOException e) {
             e.printStackTrace();
