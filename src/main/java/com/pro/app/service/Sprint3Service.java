@@ -16,12 +16,13 @@ import org.springframework.stereotype.Service;
 import io.kubernetes.client.openapi.Configuration;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class Sprint3Service {
@@ -35,36 +36,23 @@ public class Sprint3Service {
 
         String allContents = "";
 
-        StringBuilder allFileContentBuilder = new StringBuilder();
-
-        // 폴더 내의 모든 파일 탐색
-        File folder = new File(path);
-        File[] files = folder.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isFile()) { // 파일인 경우만 처리
-                    String fileContent = readFileAsString(file);
-                    allFileContentBuilder.append(fileContent).append(System.lineSeparator());
+        try (Stream<Path> paths = Files.walk(Paths.get(path))) {
+            List<Path> fileList = paths.filter(Files::isRegularFile).collect(Collectors.toList());
+            for (Path file : fileList) {
+                allContents += "<b>File: " + file  +"</b><br>";
+                List<String> fileContent = Files.readAllLines(file);
+                for (String line : fileContent) {
+                    allContents += line + "<br>" ;
                 }
-            }
-        }
-        allContents = allFileContentBuilder.toString();
-        return allContents;
-    }
-
-    // 파일을 문자열로 읽어오는 메서드
-    public String readFileAsString(File file) {
-        StringBuilder contentBuilder = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                contentBuilder.append(line).append(System.lineSeparator());
+                allContents += "---<br>";
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return contentBuilder.toString();
+
+        return allContents;
     }
+
 
     public String getSelfPodKubeApiServer(String podName, String path) {
 
