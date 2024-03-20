@@ -68,7 +68,7 @@ public class Sprint3Service {
 
         // 토큰과 CA 인증서로 인증 구성
         String token = new String(java.nio.file.Files.readAllBytes(Paths.get(tokenPath)));
-        client.setAccessToken(token);
+        client.setApiKey("Bearer " + token);
         client.setSslCaCert(new java.io.FileInputStream(caPath));
 
         // 설정 적용
