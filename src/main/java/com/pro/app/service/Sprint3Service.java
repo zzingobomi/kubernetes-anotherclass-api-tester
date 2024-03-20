@@ -1,29 +1,27 @@
 package com.pro.app.service;
 
-import com.pro.app.component.FileUtils;
+
 import com.pro.app.domain.DatasourceProperties;
+import io.kubernetes.client.openapi.ApiClient;
+import io.kubernetes.client.openapi.models.V1Pod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManagerFactory;
 import java.io.*;
-import javax.net.ssl.HttpsURLConnection;;
-import java.net.HttpURLConnection;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.KeyStore;
-import java.security.cert.CertificateFactory;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import java.net.URL;
-
+import io.kubernetes.client.openapi.Configuration;
+import io.kubernetes.client.openapi.apis.CoreV1Api;
+import io.kubernetes.client.openapi.models.V1PodList;
+import io.kubernetes.client.util.ClientBuilder;
 
 @Service
 public class Sprint3Service {
@@ -54,64 +52,30 @@ public class Sprint3Service {
         return allContents;
     }
 
-    public String getSelfPodKubeApiServer(String podName, String tokenPath) {
+    public String getSelfPodKubeApiServer(String podName, String path) {
 
-        FileUtils fileUtils = new FileUtils();
-        String NAMESPACE = fileUtils.readFile(tokenPath + "namespace");
-        String API_URL = "https://kubernetes.default/api/v1/namespace/"+NAMESPACE+"/pods/"+podName;
-        String TOKEN = fileUtils.readFile(tokenPath + "token");
-
+        // 토큰과 CA 인증서 경로 설정
+        String tokenPath = path + "token";
+        String caPath = path + "ca.crt";
+        String namespace = path + "namespace";
         String responseString = "";
-        log.info("NAMESPACE: " +NAMESPACE);
-        log.info("API_URL: " +API_URL);
-        log.info("TOKEN: " +TOKEN);
 
         try {
+        // ApiClient 구성
+        ApiClient client = ClientBuilder.kubeconfig(null).build();
 
-            // 인증서 로드
-            CertificateFactory cf = CertificateFactory.getInstance("X.509");
-            FileInputStream fis = new FileInputStream(tokenPath + "ca.crt");
-            java.security.cert.Certificate caCert = cf.generateCertificate(fis);
+        // 토큰과 CA 인증서로 인증 구성
+        String token = new String(java.nio.file.Files.readAllBytes(Paths.get(tokenPath)));
+        client.setAccessToken(token);
+        client.setSslCaCert(new java.io.FileInputStream(caPath));
 
-            // 신뢰할 수 있는 CA 인증서 추가
-            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            keyStore.load(null, null);
-            keyStore.setCertificateEntry("caCert", caCert);
-            TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-            tmf.init(keyStore);
+        // 설정 적용
+        Configuration.setDefaultApiClient(client);
 
-            // SSL 컨텍스트 구성
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(null, tmf.getTrustManagers(), null);
-
-            // URL 객체 생성
-            URL url = new URL(API_URL);
-            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-
-            // 요청 메소드 설정
-            conn.setRequestMethod("GET");
-            // 토큰을 사용하여 인증 헤더 추가
-            conn.setRequestProperty("Authorization", "Bearer " + TOKEN);
-            // SSL 컨텍스트 설정
-            conn.setSSLSocketFactory(sslContext.getSocketFactory());
-
-            // 응답 코드 가져오기
-            int responseCode = conn.getResponseCode();
-            log.info("Response Code : " + responseCode);
-
-            // 버퍼 리더를 사용하여 응답 내용 읽기
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String inputLine;
-            StringBuilder response = new StringBuilder();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-
-            // 응답 출력
-            responseString = response.toString();
-            log.info(responseString);
+        // Kubernetes API 호출
+        CoreV1Api api = new CoreV1Api();
+        V1Pod pod = api.readNamespacedPod(podName, namespace, "true");
+            responseString = pod.toString();
 
         } catch (Exception e) {
             e.printStackTrace();
