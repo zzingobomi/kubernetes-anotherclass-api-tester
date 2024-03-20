@@ -66,6 +66,10 @@ public class Sprint3Service {
         // ApiClient 구성
         ApiClient client = Config.defaultClient();
 
+        // Kubernetes API 서버의 도메인 주소 설정
+        String kubeApiServerUrl = "https://kubernetes.default";
+        client.setBasePath(kubeApiServerUrl);
+
         // 토큰과 CA 인증서로 인증 구성
         String token = new String(java.nio.file.Files.readAllBytes(Paths.get(tokenPath)));
         client.setApiKey("Bearer " + token);
