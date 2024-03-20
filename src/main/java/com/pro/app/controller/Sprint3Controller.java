@@ -1,7 +1,5 @@
 package com.pro.app.controller;
 
-import com.pro.app.domain.DatasourceProperties;
-import com.pro.app.service.DefaultService;
 import com.pro.app.service.Sprint3Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +36,7 @@ public class Sprint3Controller {
 
     @GetMapping("/pod-downward-api-volume")
     @ResponseBody
-    public ResponseEntity<Object> podDownwardApiVolume() throws Exception {
+    public ResponseEntity<Object> podDownwardApiVolume()  {
 
         String returnString = sprint3Service.loadDownwardApiFile(downwardApiVolumeFilepath);
         return ResponseEntity.ok(returnString);

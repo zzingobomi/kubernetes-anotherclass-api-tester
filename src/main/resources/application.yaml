@@ -18,7 +18,7 @@ postgresql:
 
 # Pod 정보 파일 (Pod의 Volume과 env로 주입)
 downward-api:
-  volume:
+  volume: 
     filepath:
   env:
     podname:

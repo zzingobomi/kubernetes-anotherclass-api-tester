@@ -15,7 +15,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class Sprint3Service {
@@ -25,15 +31,24 @@ public class Sprint3Service {
 
 
 
-    public String loadDownwardApiFile(String path) throws Exception  {
-        Yaml y = new Yaml();
-        Reader yamlFile = new FileReader(path);
+    public String loadDownwardApiFile(String path)  {
 
-        Map<String, Object> yamlMaps = y.load(yamlFile);
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        String prettyYamlString = mapper.writeValueAsString(yamlMaps);
+        String allContents = "";
 
-        return prettyYamlString;
+        try (Stream<Path> paths = Files.walk(Paths.get(path))) {
+            List<Path> fileList = paths.filter(Files::isRegularFile).collect(Collectors.toList());
+            for (Path file : fileList) {
+                allContents += "File: " + file;
+                List<String> fileContent = Files.readAllLines(file);
+                for (String line : fileContent) {
+                    allContents += "\n" + line;
+                }
+                allContents += "----------";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return allContents;
     }
 }
