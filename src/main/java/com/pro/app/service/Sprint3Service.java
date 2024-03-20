@@ -81,22 +81,23 @@ public class Sprint3Service {
             CoreV1Api api = new CoreV1Api();
             V1Pod pod = api.readNamespacedPod(podName, namespace, "true");
             responseString = Yaml.dump(pod);
+            log.info("ResponseString: " + responseString);
 
 
         } catch (ApiException e) {
             log.error("Status: " + e.getCode());
             log.error("Body: " + e.getResponseBody());
             responseString = e.getResponseBody();
-            responseString.replace("&", "&amp;")
-                    .replace("<", "&lt;")
-                    .replace(">", "&gt;")
-                    .replace("\"", "&quot;")
-                    .replace("'", "&#x27;");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return responseString;
+        return responseString.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#x27;");
     }
 
 
