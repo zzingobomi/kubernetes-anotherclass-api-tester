@@ -59,7 +59,7 @@ public class Sprint3Service {
 
         FileUtils fileUtils = new FileUtils();
         String NAMESPACE = fileUtils.readFile(tokenPath + "namespace");
-        String API_URL = "https://kubernetets/api/v1/pods/"+podName+"?namespace="+NAMESPACE;
+        String API_URL = "https://kubernetes/api/v1/namespace/"+NAMESPACE+"/pods/"+podName;
         String TOKEN = "Bearer " + fileUtils.readFile(tokenPath + "token");
         String responseString = "";
         log.info("NAMESPACE: " +NAMESPACE);
