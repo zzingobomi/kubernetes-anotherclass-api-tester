@@ -16,6 +16,15 @@ application:
 postgresql:
   filepath: "/usr/src/myapp/datasource/postgresql-info.yaml"
 
+# Pod 정보 파일 (Pod의 Volume과 env로 주입)
+downward-api:
+  volume:
+    filepath:
+  env:
+    podname:
+    podip:
+    nodename:
+
 # Database 접속 정보
 datasource:
   driver-class-name:

@@ -21,8 +21,6 @@ import java.util.Map;
 @Service
 public class DefaultService {
     private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
-    @Autowired
-    private DatasourceProperties datasourceProperties;
     public Boolean isAppLive = false;
     public Boolean isAppReady = false;
 
@@ -75,29 +73,6 @@ public class DefaultService {
 
     }
 
-    @Value(value = "${postgresql.filepath}")
-    private String postgresqlFilepath;
-
-    @PostConstruct
-    public void datasourceSecretLoad() {
-        Yaml y = new Yaml();
-        Reader yamlFile = null;
-        try {
-            yamlFile = new FileReader(postgresqlFilepath);
-        } catch (FileNotFoundException e) {
-
-        }
-
-        if (yamlFile != null) {
-            Map<String, Object> yamlMaps = y.load(yamlFile);
-
-            datasourceProperties.setDriverClassName(yamlMaps.get("driver-class-name").toString());
-            datasourceProperties.setUrl(yamlMaps.get("url").toString());
-            datasourceProperties.setUsername(yamlMaps.get("username").toString());
-            datasourceProperties.setPassword(yamlMaps.get("password").toString());
-        }
-    }
-
 
     public String listFiles(String path) {
 
@@ -143,5 +118,4 @@ public class DefaultService {
 
         return listFiles(path);
     }
-
 }
