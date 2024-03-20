@@ -87,6 +87,11 @@ public class Sprint3Service {
             log.error("Status: " + e.getCode());
             log.error("Body: " + e.getResponseBody());
             responseString = e.getResponseBody();
+            responseString.replace("&", "&amp;")
+                    .replace("<", "&lt;")
+                    .replace(">", "&gt;")
+                    .replace("\"", "&quot;")
+                    .replace("'", "&#x27;");
         } catch (Exception e) {
             e.printStackTrace();
         }
