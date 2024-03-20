@@ -55,12 +55,11 @@ public class Sprint3Service {
         String NAMESPACE = fileUtils.readFile(tokenPath + "namespace");
         String API_URL = "https://kubernetes.default/api/v1/namespace/"+NAMESPACE+"/pods/"+podName;
         String TOKEN = fileUtils.readFile(tokenPath + "token");
-        String CA_CRT = fileUtils.readFile(tokenPath + "ca.crt");
+
         String responseString = "";
         log.info("NAMESPACE: " +NAMESPACE);
         log.info("API_URL: " +API_URL);
         log.info("TOKEN: " +TOKEN);
-        log.info("CA_CRT: " +CA_CRT);
 
         try {
 
@@ -74,7 +73,7 @@ public class Sprint3Service {
             conn.setRequestProperty("Authorization", "Bearer " + TOKEN);
 
             // 설정된 CA 인증서 파일을 사용하여 SSL 연결 설정
-            System.setProperty("javax.net.ssl.trustStore", CA_CRT);
+            System.setProperty("javax.net.ssl.trustStore", tokenPath+"ca.crt");
 
             // 응답 코드 가져오기
             int responseCode = conn.getResponseCode();
