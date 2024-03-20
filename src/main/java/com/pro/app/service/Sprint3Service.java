@@ -3,6 +3,7 @@ package com.pro.app.service;
 
 import com.pro.app.domain.DatasourceProperties;
 import io.kubernetes.client.openapi.ApiClient;
+import io.kubernetes.client.openapi.ApiException;
 import io.kubernetes.client.openapi.models.V1Pod;
 import io.kubernetes.client.util.Config;
 import io.kubernetes.client.util.Yaml;
@@ -83,6 +84,10 @@ public class Sprint3Service {
         V1Pod pod = api.readNamespacedPod(podName, namespace, "true");
         responseString = Yaml.dump(pod);
 
+
+        } catch (ApiException e) {
+            log.error("Status: " + e.getCode());
+            log.error("Body: " + e.getResponseBody());
         } catch (Exception e) {
             e.printStackTrace();
         }
