@@ -33,42 +33,34 @@ public class ShutdownHook {
     @PreDestroy
     public void cleanup() {
 
-        // 현재 시간을 LocalDateTime 객체로 가져옴
-        LocalDateTime now = LocalDateTime.now();
-
-        // DateTimeFormatter를 사용하여 시간 포맷 설정
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        // 현재 시간을 설정한 포맷으로 출력
-        log.info("Current time: " + now.format(formatter));
 
         try {
-            log.info("Database connection has been safely released. - []", LocalDateTime.now().format(formatter));
             Thread.sleep(1000);
-            now = LocalDateTime.now();
+            log.info("Database connection has been safely released. - []", java.time.LocalDateTime.now());
 
-            log.info("File stream has been safely released. - []", LocalDateTime.now().format(formatter));
             Thread.sleep(1000);
+            log.info("File stream has been safely released. - []", java.time.LocalDateTime.now());
 
-            log.info("Message Queue has been safely released. - []", LocalDateTime.now().format(formatter));
             Thread.sleep(1000);
+            log.info("Message Queue has been safely released. - []", java.time.LocalDateTime.now());
 
-            log.info("Thread is safely releasing.... - []", LocalDateTime.now().format(formatter));
-            Thread.sleep(1000);
-
-            log.info("Running Thread... (4/5). - []", LocalDateTime.now().format(formatter));
             Thread.sleep(2000);
+            log.info("Thread is safely releasing.... - []", java.time.LocalDateTime.now());
 
-            log.info("Running Thread... (3/5). - []", LocalDateTime.now().format(formatter));
             Thread.sleep(2000);
+            log.info("Running Thread... (4/5). - []", java.time.LocalDateTime.now());
 
-            log.info("Running Thread... (2/5). - []", LocalDateTime.now().format(formatter));
             Thread.sleep(2000);
+            log.info("Running Thread... (3/5). - []", java.time.LocalDateTime.now());
 
-            log.info("Running Thread... (1/5). - []", LocalDateTime.now().format(formatter));
             Thread.sleep(2000);
+            log.info("Running Thread... (2/5). - []", java.time.LocalDateTime.now());
 
-            log.info("Thread has been safely released.. - []", LocalDateTime.now().format(formatter));
+            Thread.sleep(2000);
+            log.info("Running Thread... (1/5). - []", java.time.LocalDateTime.now());
+
+            Thread.sleep(2000);
+            log.info("Thread has been safely released.. - []", java.time.LocalDateTime.now());
 
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

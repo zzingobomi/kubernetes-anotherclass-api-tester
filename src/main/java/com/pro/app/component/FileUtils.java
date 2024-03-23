@@ -29,6 +29,10 @@ public class FileUtils {
 
             // 폴더 없으면 생성
             Path parentDir = messagePath.getParent();
+            if ( parentDir == null ) {
+                return;
+            }
+
             File path = new File(parentDir.toString());
             if(!path.exists()) {
                 path.mkdirs();
