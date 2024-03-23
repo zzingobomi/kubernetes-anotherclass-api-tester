@@ -43,39 +43,32 @@ public class ShutdownHook {
         log.info("Current time: " + now.format(formatter));
 
         try {
-            log.info("Database connection has been safely released.");
+            log.info("Database connection has been safely released. - []", LocalDateTime.now().format(formatter));
             Thread.sleep(1000);
-            log.info("Current time: " + now.format(formatter));
+            now = LocalDateTime.now();
 
-            log.info("File stream has been safely released.");
+            log.info("File stream has been safely released. - []", LocalDateTime.now().format(formatter));
             Thread.sleep(1000);
-            log.info("Current time: " + now.format(formatter));
 
-            log.info("Message Queue has been safely released.");
+            log.info("Message Queue has been safely released. - []", LocalDateTime.now().format(formatter));
             Thread.sleep(1000);
-            log.info("Current time: " + now.format(formatter));
 
-            log.info("Thread is safely releasing...");
+            log.info("Thread is safely releasing.... - []", LocalDateTime.now().format(formatter));
             Thread.sleep(1000);
-            log.info("Current time: " + now.format(formatter));
 
-            log.info("Running Thread... (4/5)");
+            log.info("Running Thread... (4/5). - []", LocalDateTime.now().format(formatter));
             Thread.sleep(2000);
-            log.info("Current time: " + now.format(formatter));
 
-            log.info("Running Thread... (3/5)");
+            log.info("Running Thread... (3/5). - []", LocalDateTime.now().format(formatter));
             Thread.sleep(2000);
-            log.info("Current time: " + now.format(formatter));
 
-            log.info("Running Thread... (2/5)");
+            log.info("Running Thread... (2/5). - []", LocalDateTime.now().format(formatter));
             Thread.sleep(2000);
-            log.info("Current time: " + now.format(formatter));
 
-            log.info("Running Thread... (1/5)");
+            log.info("Running Thread... (1/5). - []", LocalDateTime.now().format(formatter));
             Thread.sleep(2000);
-            log.info("Current time: " + now.format(formatter));
 
-            log.info("Thread has been safely released.");
+            log.info("Thread has been safely released.. - []", LocalDateTime.now().format(formatter));
 
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
