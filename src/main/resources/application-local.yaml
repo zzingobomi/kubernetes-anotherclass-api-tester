@@ -1,3 +1,4 @@
+# DB 연결 정보 (K8S에서 Secret로 주입)
 datasource:
   driver-class-name: "org.postgresql.Driver"
   url: "jdbc:postgresql://postgresql:5430"
@@ -9,7 +10,22 @@ volume-path:
   # for windows
   persistent-volume-data: "C:\\volume\\local\\pv\\"
   pod-volume-data: "C:\\volume\\local\\pod\\"
-
   # for mac
 #  persistent-volume-data: "/users/<username>/IdeaProjects/volume/local/pv/"
 #  pod-volume-data: "/users/<username>/IdeaProjects/volume/local/pod/"
+
+# Pod 정보 파일 (Pod의 Volume과 env로 주입)
+downward:
+  volume:
+    filepath: "C:\\volume\\local\\downward-api\\"
+  env:
+    pod-name: api-tester-3111-94485c47b-5xwsg
+    pod-ip: 20.10.10.1
+    node-name: test-node
+termination:
+  message-path: "C:\\volume\\local\\log\\shutdown.log"
+
+# kube-apiserver 정보 (Secret으로 주입)
+api-token:
+  url: "https://192.168.56.30.6443"
+  filepath: "C:\\volume\\local\\kube-apiserver\\"

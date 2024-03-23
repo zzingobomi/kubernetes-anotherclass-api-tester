@@ -2,10 +2,14 @@
 spring:
   profiles:
     active: local
+  # App 종료시
+  lifecycle:
+    timeout-per-shutdown-phase: 20s  #default 30s
 
 # App Port
 server:
   port: 8080
+  shutdown: graceful
 
 # App 정보
 application:
@@ -15,17 +19,6 @@ application:
 # Database 접속 정보 위치 (Secret으로 주입)
 postgresql:
   filepath: "/usr/src/myapp/datasource/postgresql-info.yaml"
-api-token:
-  filepath:
-
-# Pod 정보 파일 (Pod의 Volume과 env로 주입)
-downward-api:
-  volume:
-    filepath:
-  env:
-    podname:
-    podip:
-    nodename:
 
 # Database 접속 정보
 datasource:
@@ -38,3 +31,19 @@ datasource:
 volume-path:
   persistent-volume-data: 
   pod-volume-data:
+
+# Pod 정보 파일 (Pod의 Volume과 env로 주입)
+downward:
+  volume:
+    filepath:
+  env:
+    pod-name:
+    pod-ip:
+    node-name:
+termination:
+  message-path:
+
+# kube-apiserver 정보 (Secret으로 주입)
+api-token:
+  url: "https://kubernetes.default"
+  filepath:

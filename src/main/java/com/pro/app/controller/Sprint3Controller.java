@@ -1,5 +1,6 @@
 package com.pro.app.controller;
 
+import com.pro.app.component.FileUtils;
 import com.pro.app.service.Sprint3Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,15 +21,21 @@ public class Sprint3Controller {
     @Autowired
     private Sprint3Service sprint3Service;
 
-    @Value(value = "${downward-api.volume.filepath}")
+    @Autowired
+    private FileUtils fileUtils;
+
+    @Value(value = "${downward.volume.filepath}")
     private String downwardApiVolumeFilepath;
 
-    @Value(value = "${downward-api.env.podname}")
+    @Value(value = "${downward.env.pod-name}")
     private String downwardApiEnvPodName;
-    @Value(value = "${downward-api.env.podip}")
+    @Value(value = "${downward.env.pod-ip}")
     private String downwardApiEnvPodIP;
-    @Value(value = "${downward-api.env.nodename}")
+    @Value(value = "${downward.env.node-name}")
     private String downwardApiEnvNodeName;
+
+    @Value(value = "${api-token.url}")
+    private String apiTokenUrl;
 
     @Value(value = "${api-token.filepath}")
     private String apiTokenFilepath;
@@ -57,28 +64,50 @@ public class Sprint3Controller {
     @ResponseBody
     public ResponseEntity<Object> podKubeApiServer()  {
 
-        String returnYaml = sprint3Service.getSelfPodKubeApiServer(downwardApiEnvPodName, apiTokenFilepath);
-        String escapeHtml = returnYaml.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\"", "&quot;")
-                .replace("'", "&#x27;");
+        String returnYaml = sprint3Service.getSelfPodKubeApiServer(apiTokenUrl, downwardApiEnvPodName, apiTokenFilepath);
+        if (returnYaml != null) {
+            String escapeHtml = returnYaml.replace("&", "&amp;")
+                    .replace("<", "&lt;")
+                    .replace(">", "&gt;")
+                    .replace("\"", "&quot;")
+                    .replace("'", "&#x27;");
 
-        // YAML 문자열을 HTML 내에 포함
-        String htmlContent = "<!DOCTYPE html>" +
-                "<html>" +
-                "<head>" +
-                "<title>Pod Information</title>" +
-                "<style>pre { background-color: #f0f0f0; padding: 10px; }</style>" +
-                "</head>" +
-                "<body>" +
-                "<h1>Pod Information in YAML Format</h1>" +
-                "<pre>" + escapeHtml + "</pre>" +
-                "</body>" +
-                "</html>";
-
-        return ResponseEntity.ok().header("Content-Type", "text/html;charset=UTF-8")
-                .body(htmlContent);
+            // YAML 문자열을 HTML 내에 포함
+            String htmlContent = "<!DOCTYPE html>" +
+                    "<html>" +
+                    "<head>" +
+                    "<title>Pod Information</title>" +
+                    "<style>pre { background-color: #f0f0f0; padding: 10px; }</style>" +
+                    "</head>" +
+                    "<body>" +
+                    "<h1>Pod Information in YAML Format</h1>" +
+                    "<pre>" + escapeHtml + "</pre>" +
+                    "</body>" +
+                    "</html>";
+            return ResponseEntity.ok().header("Content-Type", "text/html;charset=UTF-8")
+                    .body(htmlContent);
+        }  else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
+
+    @GetMapping("/graceful-shutdown")
+    public void gracefulShutdown() {
+        // 내부의 종료 로직 호출
+        System.exit(1);
+
+        // 이후 Shutdwon Hook 컴포넌트에서 자원 해제 로직이 실행됨
+    }
+
+    @GetMapping("/unexpected-shutdown")
+    public void unexpectedShutdown() {
+        try {
+            throw new RuntimeException("The system has been shut down due to a memory leak.");
+        } catch (RuntimeException e) {
+
+            // 종료 메세지가 terminationMessagePath에 저장됨
+            fileUtils.writeTerminationMessage(e.getMessage());
+        }
+    }
 }
