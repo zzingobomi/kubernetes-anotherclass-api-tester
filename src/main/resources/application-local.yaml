@@ -23,7 +23,7 @@ downward:
     pod-ip: 20.10.10.1
     node-name: test-node
 termination:
-  message-path: "C:\\volume\\local\\log\\shutdown.log"
+  message-path: "C:\\volume\\local\\log\\termination.message"
 
 # kube-apiserver 정보 (Secret으로 주입)
 api-token:

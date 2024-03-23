@@ -105,9 +105,12 @@ public class Sprint3Controller {
         try {
             throw new RuntimeException("The system has been shut down due to a memory leak.");
         } catch (RuntimeException e) {
-
+            e.getStackTrace();
             // 종료 메세지가 terminationMessagePath에 저장됨
             fileUtils.writeTerminationMessage(e.getMessage());
+
+            // 애플리케이션을 즉시 종료하며, Shutdown 훅이 실행되지 않음
+            Runtime.getRuntime().halt(1);
         }
     }
 }
