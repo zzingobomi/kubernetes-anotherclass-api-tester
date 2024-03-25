@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.stereotype.Component;
 import javax.annotation.PreDestroy;
 import java.io.File;
@@ -71,5 +72,15 @@ public class ShutdownHook {
 
         // 여기에 정상 종료 코드 반환한다고, 아래 로직 넣으면 종료 무한 루프에 빠짐
         // System.exit(0);
+    }
+
+
+    @Component
+    public class CustomExitCodeGenerator implements ExitCodeGenerator {
+        @Override
+        public int getExitCode() {
+            // 여기에 원하는 종료 코드를 반환
+            return 0;
+        }
     }
 }
