@@ -68,8 +68,5 @@ public class ShutdownHook {
 
         // 종료 메세지가 terminationMessagePath에 저장됨
         fileUtils.writeTerminationMessage("The application shuts down gracefully");
-
-        // 정상 종료 코드 반환
-        System.exit(0);
     }
 }
