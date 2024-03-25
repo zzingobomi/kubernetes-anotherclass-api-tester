@@ -95,8 +95,6 @@ public class Sprint3Controller {
     @GetMapping("/graceful-shutdown")
     public void gracefulShutdown() {
 
-        log.info("Get Api - /graceful-shutdown");
-
         // 내부의 종료 로직 호출 (정상 종료)
         System.exit(0);
 
@@ -106,8 +104,6 @@ public class Sprint3Controller {
 
     @GetMapping("/unexpected-shutdown")
     public void unexpectedShutdown() {
-
-
 
         try {
             throw new RuntimeException("The system has been shut down due to a memory leak.");

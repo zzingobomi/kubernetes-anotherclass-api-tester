@@ -4,7 +4,7 @@ spring:
     active: local
   # App 종료시
   lifecycle:
-    timeout-per-shutdown-phase: 20s  #default 30s
+    timeout-per-shutdown-phase: 30s  #default 30s
 
 # App Port
 server:
