@@ -31,7 +31,7 @@ public class ShutdownHook {
     private FileUtils fileUtils;
 
     @PreDestroy
-    public int cleanup() {
+    public void cleanup() {
 
 
         try {
@@ -71,6 +71,5 @@ public class ShutdownHook {
 
         // 여기에 정상 종료 코드 반환한다고, 아래 로직 넣으면 종료 무한 루프에 빠짐
         // System.exit(0);
-        return 0;
     }
 }
