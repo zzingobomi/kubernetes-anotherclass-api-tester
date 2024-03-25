@@ -31,7 +31,7 @@ public class ShutdownHook {
     private FileUtils fileUtils;
 
     @PreDestroy
-    public void cleanup() {
+    public int cleanup() {
 
 
         try {
@@ -68,5 +68,9 @@ public class ShutdownHook {
 
         // 종료 메세지가 terminationMessagePath에 저장됨
         fileUtils.writeTerminationMessage("The application shuts down gracefully");
+
+        // 여기에 정상 종료 코드 반환한다고, 아래 로직 넣으면 종료 무한 루프에 빠짐
+        // System.exit(0);
+        return 0;
     }
 }
