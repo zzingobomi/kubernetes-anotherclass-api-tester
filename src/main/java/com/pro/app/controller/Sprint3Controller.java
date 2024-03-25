@@ -97,7 +97,7 @@ public class Sprint3Controller {
 
         log.info("Get Api - /graceful-shutdown");
 
-        // 내부의 종료 로직 호출
+        // 내부의 종료 로직 호출 (정상 종료)
         System.exit(0);
 
         // 이후 Shutdwon Hook 컴포넌트에서 자원 해제 로직이 실행됨
@@ -123,7 +123,7 @@ public class Sprint3Controller {
             // 종료 메세지가 terminationMessagePath에 저장됨
             fileUtils.writeTerminationMessage(e.getMessage());
 
-            // 애플리케이션을 즉시 종료하며, Shutdown 훅이 실행되지 않음
+            // 애플리케이션을 즉시 종료하며, Shutdown 훅이 실행되지 않음 (비정상 종료)
             Runtime.getRuntime().halt(1);
         }
     }
