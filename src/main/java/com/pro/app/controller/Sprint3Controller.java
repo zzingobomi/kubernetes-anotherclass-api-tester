@@ -103,13 +103,6 @@ public class Sprint3Controller {
         // 이후 Shutdwon Hook 컴포넌트에서 자원 해제 로직이 실행됨
     }
 
-    @GetMapping("/traffic")
-    public ResponseEntity<Object> gracefulShutdownTraffic() {
-
-        log.info("Get Api - /traffic");
-
-        return ResponseEntity.ok("Ok");
-    }
 
     @GetMapping("/unexpected-shutdown")
     public void unexpectedShutdown() {

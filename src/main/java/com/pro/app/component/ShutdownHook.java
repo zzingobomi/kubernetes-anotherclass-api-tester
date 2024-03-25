@@ -37,31 +37,31 @@ public class ShutdownHook {
 
         try {
             Thread.sleep(1000);
-            log.info("Database connection has been safely released. - []", java.time.LocalDateTime.now());
+            log.info("Database connection has been safely released. - {}", java.time.LocalDateTime.now());
 
             Thread.sleep(1000);
-            log.info("File stream has been safely released. - []", java.time.LocalDateTime.now());
+            log.info("File stream has been safely released. - {}", java.time.LocalDateTime.now());
 
             Thread.sleep(1000);
-            log.info("Message Queue has been safely released. - []", java.time.LocalDateTime.now());
+            log.info("Message Queue has been safely released. - {}", java.time.LocalDateTime.now());
 
             Thread.sleep(2000);
-            log.info("Thread is safely releasing.... - []", java.time.LocalDateTime.now());
+            log.info("Thread is safely releasing.... - {}", java.time.LocalDateTime.now());
 
             Thread.sleep(2000);
-            log.info("Running Thread... (4/5). - []", java.time.LocalDateTime.now());
+            log.info("Running Thread... (4/5). - {}", java.time.LocalDateTime.now());
 
             Thread.sleep(2000);
-            log.info("Running Thread... (3/5). - []", java.time.LocalDateTime.now());
+            log.info("Running Thread... (3/5). - {}", java.time.LocalDateTime.now());
 
             Thread.sleep(2000);
-            log.info("Running Thread... (2/5). - []", java.time.LocalDateTime.now());
+            log.info("Running Thread... (2/5). - {}", java.time.LocalDateTime.now());
 
             Thread.sleep(2000);
-            log.info("Running Thread... (1/5). - []", java.time.LocalDateTime.now());
+            log.info("Running Thread... (1/5). - {}", java.time.LocalDateTime.now());
 
             Thread.sleep(2000);
-            log.info("Thread has been safely released.. - []", java.time.LocalDateTime.now());
+            log.info("Thread has been safely released.. - {}", java.time.LocalDateTime.now());
 
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
