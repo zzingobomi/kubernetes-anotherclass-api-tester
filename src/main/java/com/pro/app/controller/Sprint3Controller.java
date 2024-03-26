@@ -98,7 +98,7 @@ public class Sprint3Controller {
         // 내부의 종료 로직 호출 (정상 종료)
         System.exit(0);
 
-        // 이후 Shutdwon Hook 컴포넌트에서 자원 해제 로직이 실행됨
+        // 이후 ShutdownHook 컴포넌트에서 자원 해제 로직이 실행됨
     }
 
 
@@ -108,7 +108,7 @@ public class Sprint3Controller {
         try {
             throw new RuntimeException("The system has been shut down due to a memory leak.");
         } catch (RuntimeException e) {
-            e.getStackTrace();
+            e.printStackTrace();
             // 종료 메세지가 terminationMessagePath에 저장됨
             fileUtils.writeTerminationMessage(e.getMessage());
 

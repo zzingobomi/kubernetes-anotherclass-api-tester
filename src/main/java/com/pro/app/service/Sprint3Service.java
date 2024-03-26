@@ -11,8 +11,6 @@ import io.kubernetes.client.util.Yaml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
 import io.kubernetes.client.openapi.Configuration;
@@ -100,8 +98,4 @@ public class Sprint3Service {
 
         return responseString;
     }
-
-
-
-
 }

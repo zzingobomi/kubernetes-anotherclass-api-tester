@@ -25,9 +25,6 @@ public class ShutdownHook {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
-    @Value(value = "${termination.message-path}")
-    private String terminationMessagePath;
-
     @Autowired
     private FileUtils fileUtils;
 
@@ -67,20 +64,8 @@ public class ShutdownHook {
             throw new RuntimeException(e);
         }
 
-        // 종료 메세지가 terminationMessagePath에 저장됨
-        fileUtils.writeTerminationMessage("The application shuts down gracefully");
-
         // 여기에 정상 종료 코드 반환한다고, 아래 로직 넣으면 종료 무한 루프에 빠짐
         // System.exit(0);
     }
 
-
-    @Component
-    public class CustomExitCodeGenerator implements ExitCodeGenerator {
-        @Override
-        public int getExitCode() {
-            // 여기에 원하는 종료 코드를 반환
-            return 0;
-        }
-    }
 }
