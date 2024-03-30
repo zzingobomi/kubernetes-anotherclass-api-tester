@@ -41,6 +41,7 @@ downward:
     pod-name:
     pod-ip:
     node-name:
+
 termination:
   message-path: "/usr/src/myapp/log/termination.message"
 
