@@ -1,3 +1,6 @@
 volume-path:
   persistent-volume-data: "/usr/src/myapp/files/dev/"
   pod-volume-data: "/usr/src/myapp/tmp/"
+
+termination:
+  message-path: "/usr/src/myapp/log/termination.message"
