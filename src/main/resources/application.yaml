@@ -43,7 +43,7 @@ downward:
     node-name:
 
 termination:
-  messagepath: "/usr/src/myapp/log/termination.message"
+  message-path: "/usr/src/myapp/log/termination.message"
 
 # kube-apiserver 정보 (Secret으로 주입)
 api-token:
