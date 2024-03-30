@@ -22,6 +22,7 @@ downward:
     pod-name: api-tester-3111-94485c47b-5xwsg
     pod-ip: 20.10.10.1
     node-name: test-node
+
 termination:
   message-path: "C:\\volume\\local\\log\\termination.message"
 
