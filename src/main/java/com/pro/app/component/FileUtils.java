@@ -19,7 +19,7 @@ public class FileUtils {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
-    @Value("${termination.message-path}")
+    @Value("${termination.messagepath}")
     private String terminationMessagePath;
 
     public void writeTerminationMessage(String message) {
