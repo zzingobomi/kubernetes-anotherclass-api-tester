@@ -28,4 +28,4 @@ termination:
 # kube-apiserver 정보 (Secret으로 주입)
 api-token:
   url: "https://192.168.56.30.6443"
-  filepath: "C:\\volume\\local\\kube-apiserver\\"
+  filepath: "C:\\volume\\local\\secrets\\"

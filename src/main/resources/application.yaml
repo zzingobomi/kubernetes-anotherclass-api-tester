@@ -4,12 +4,13 @@ spring:
     active: local
   # App 종료시
   lifecycle:
-    timeout-per-shutdown-phase: 30s  #default 30s
+    timeout-per-shutdown-phase: 30s  #Graceful Shutdown시 쓰레드가 종료를 기다리는 시간 (default 30s)
 
 # App Port
 server:
   port: 8080
-  shutdown: graceful
+  shutdown: graceful  # Graceful Shutdown 활성화 - 쓰레드가 완전히 종료 될때까지 기다림
+  #shutdown: immediate  # Graceful Shutdown 비활성화 - 쓰레드를 바로 중지 시키고 App을 종료함
 
 # App 정보
 application:
@@ -41,7 +42,7 @@ downward:
     pod-ip:
     node-name:
 termination:
-  message-path:
+  message-path: "/usr/src/myapp/log/termination.message"
 
 # kube-apiserver 정보 (Secret으로 주입)
 api-token:
