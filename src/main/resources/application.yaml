@@ -36,16 +36,16 @@ volume-path:
 # Pod 정보 파일 (Pod의 Volume과 env로 주입)
 downward:
   volume:
-    filepath:
+    filepath: "no configured"
   env:
-    pod-name:
-    pod-ip:
-    node-name:
+    pod-name: "no configured"
+    pod-ip: "no configured"
+    node-name: "no configured"
 
 termination:
-  message-path: "/usr/src/myapp/log/termination.message"
+  message-path: "no configured"
 
 # kube-apiserver 정보 (Secret으로 주입)
 api-token:
-  cluster-url: "https://kubernetes.default"
-  filepath:
+  cluster-url: "no configured"
+  filepath: "no configured"
