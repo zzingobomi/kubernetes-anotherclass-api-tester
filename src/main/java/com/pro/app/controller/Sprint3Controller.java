@@ -34,8 +34,8 @@ public class Sprint3Controller {
     @Value(value = "${downward.env.node-name}")
     private String downwardApiEnvNodeName;
 
-    @Value(value = "${api-token.url}")
-    private String apiTokenUrl;
+    @Value(value = "${api-token.cluster-url}")
+    private String clusterUrl;
 
     @Value(value = "${api-token.filepath}")
     private String apiTokenFilepath;
@@ -64,7 +64,7 @@ public class Sprint3Controller {
     @ResponseBody
     public ResponseEntity<Object> podKubeApiServer()  {
 
-        String returnYaml = sprint3Service.getSelfPodKubeApiServer(apiTokenUrl, downwardApiEnvPodName, apiTokenFilepath);
+        String returnYaml = sprint3Service.getSelfPodKubeApiServer(clusterUrl, downwardApiEnvPodName, apiTokenFilepath);
         if (returnYaml != null) {
             String escapeHtml = returnYaml.replace("&", "&amp;")
                     .replace("<", "&lt;")

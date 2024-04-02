@@ -58,7 +58,7 @@ public class Sprint3Service {
     }
 
 
-    public String getSelfPodKubeApiServer(String apiTokenUrl, String podName, String path) {
+    public String getSelfPodKubeApiServer(String clusterUrl, String podName, String path) {
 
         // 토큰과 CA 인증서 경로 설정
         String tokenPath = path + "token";
@@ -66,7 +66,7 @@ public class Sprint3Service {
         String namespacePath = path + "namespace";
         String responseString = "";
 
-        log.info(apiTokenUrl);
+        log.info(clusterUrl);
         try {
             // 파일에서 Token 읽기
             String token = new String(Files.readAllBytes(Paths.get(tokenPath)));
@@ -79,7 +79,7 @@ public class Sprint3Service {
 
             // ApiClient 생성 및 설정
             ApiClient client = Config.defaultClient();
-            client.setBasePath(apiTokenUrl);
+            client.setBasePath(clusterUrl);
             client.setApiKey("Bearer " + token);
             client.setSslCaCert(new java.io.FileInputStream(caPath));
             Configuration.setDefaultApiClient(client);

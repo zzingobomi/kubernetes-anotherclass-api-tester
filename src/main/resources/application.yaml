@@ -47,5 +47,5 @@ termination:
 
 # kube-apiserver 정보 (Secret으로 주입)
 api-token:
-  url: "https://kubernetes.default"
+  cluster-url: "https://kubernetes.default"
   filepath:
