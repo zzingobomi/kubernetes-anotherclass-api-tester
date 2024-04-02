@@ -39,6 +39,10 @@ public class Sprint3Service {
         try (Stream<Path> paths = Files.walk(Paths.get(path))) {
             List<Path> fileList = paths.filter(Files::isRegularFile).collect(Collectors.toList());
             for (Path file : fileList) {
+                if (file.toString().contains("..")) {
+                    continue;
+                }
+
                 allContents += "<b>File: " + file  +"</b><br>";
                 List<String> fileContent = Files.readAllLines(file);
                 for (String line : fileContent) {
