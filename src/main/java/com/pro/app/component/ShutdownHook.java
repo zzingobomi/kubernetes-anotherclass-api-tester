@@ -1,24 +1,13 @@
 package com.pro.app.component;
 
-
-
-import com.pro.app.service.Sprint3Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.ExitCodeGenerator;
+
 import org.springframework.stereotype.Component;
 import javax.annotation.PreDestroy;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 
 @Component
 public class ShutdownHook {
