@@ -95,6 +95,7 @@ public class Sprint3Controller {
     @GetMapping("/graceful-shutdown")
     public void gracefulShutdown() {
 
+        log.info("Received internal shutdown API (/graceful-shutdown)");
         // 내부의 종료 로직 호출 (정상 종료)
         System.exit(0);
 
